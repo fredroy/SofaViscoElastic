@@ -39,11 +39,6 @@ class PendulumController(Sofa.Core.Controller):
 		file2.write(str(0.0)+' '+str(self.node.RungeKutta.Particles.position.value[1][2])+'\n')
 		file2.close()
 
-
-		file3 = open(f"{path}HHT.txt","w")
-		file3.write(str(0.0)+' '+str(self.node.HHT.Particles.position.value[1][2])+'\n')
-		file3.close()
-
 		file4 = open(f"{path}Newmark.txt","w")
 		file4.write(str(0.0)+' '+str(self.node.Newmark.Particles.position.value[1][2])+'\n')
 		file4.close()
@@ -68,11 +63,6 @@ class PendulumController(Sofa.Core.Controller):
 		file2 = open(f"{path}RungeKutta.txt","a")
 		file2.write(str(self.time)+' '+str(self.node.RungeKutta.Particles.position.value[1][2])+'\n')
 		file2.close()
-
-
-		file3 = open(f"{path}HHT.txt","a")
-		file3.write(str(self.time)+' '+str(self.node.HHT.Particles.position.value[1][2])+'\n')
-		file3.close()
 
 		file4 = open(f"{path}Newmark.txt","a")
 		file4.write(str(self.time)+' '+str(self.node.Newmark.Particles.position.value[1][2])+'\n')
@@ -124,16 +114,6 @@ def createScene(rootNode):
 
 	RK = rootNode.addChild("RungeKutta")
 	RK.addObject('RungeKutta4Solver', name="Solver")
-	RK.addObject('CGLinearSolver', name="CG Solver", iterations="25", tolerance="1e-10", threshold="1e-10")
-	RK.addObject('MechanicalObject', name="Particles", template="Vec3d",position="0 0 0 1 0 0", velocity="0 0 0 0 0 0", showObject = True, showObjectScale = 10)
-	RK.addObject('UniformMass', name="Mass", totalMass="0.1")
-	RK.addObject('FixedConstraint', indices="0")
-	RK.addObject('StiffSpringForceField', name="Springs", spring="0 1 100 0.0 1")
-	# RK.addObject('SphereCollisionModel', radius="0.1")
-
-
-	RK = rootNode.addChild("HHT")
-	RK.addObject('HHTSolver', name="Solver")
 	RK.addObject('CGLinearSolver', name="CG Solver", iterations="25", tolerance="1e-10", threshold="1e-10")
 	RK.addObject('MechanicalObject', name="Particles", template="Vec3d",position="0 0 0 1 0 0", velocity="0 0 0 0 0 0", showObject = True, showObjectScale = 10)
 	RK.addObject('UniformMass', name="Mass", totalMass="0.1")

@@ -118,9 +118,8 @@ def createScene(rootNode):
     # Animation / constraint loop
     rootNode.addObject("FreeMotionAnimationLoop")
 
-    # BlockGaussSeidelConstraintSolver was removed in SOFA 25.06 → use GenericConstraintSolver
     rootNode.addObject(
-        "GenericConstraintSolver",
+        "BlockGaussSeidelConstraintSolver",
         maxIterations=1e4,
         tolerance=1e-50,
     )

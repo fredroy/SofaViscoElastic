@@ -63,6 +63,22 @@ class CylinderController(Sofa.Core.Controller):
 
 
 def createScene(rootNode):
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Constraint.Lagrangian.Solver') # Needed to use components [BlockGaussSeidelConstraintSolver]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Constraint.Projective') # Needed to use components [FixedProjectiveConstraint]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Engine.Select') # Needed to use components [BoxROI]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.IO.Mesh') # Needed to use components [MeshSTLLoader,MeshVTKLoader]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.LinearSolver.Iterative') # Needed to use components [CGLinearSolver]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Mapping.Linear') # Needed to use components [BarycentricMapping]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Mass') # Needed to use components [UniformMass]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.MechanicalLoad') # Needed to use components [ConstantForceField]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.ODESolver.Backward') # Needed to use components [EulerImplicitSolver]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.StateContainer') # Needed to use components [MechanicalObject]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Topology.Container.Dynamic') # Needed to use components [TetrahedronSetGeometryAlgorithms,TetrahedronSetTopologyContainer,TetrahedronSetTopologyModifier]
+    rootNode.addObject('RequiredPlugin', name='Sofa.Component.Visual') # Needed to use components [VisualStyle]
+    rootNode.addObject('RequiredPlugin', name='Sofa.GL.Component.Rendering3D') # Needed to use components [OglModel,OglSceneFrame]
+    rootNode.addObject('RequiredPlugin', name='SofaViscoElastic') # Needed to use components [TetrahedronViscoelasticityFEMForceField]
+
+
     rootNode.addObject(
         'VisualStyle',
         displayFlags='showVisualModels hideBehaviorModels hideCollisionModels '
@@ -73,7 +89,7 @@ def createScene(rootNode):
     rootNode.gravity = [0, 0, -9.81]
     rootNode.dt = 1e6 / 70e6
     rootNode.addObject('DefaultAnimationLoop', computeBoundingBox="0")
-    rootNode.addObject('GenericConstraintSolver', tolerance=1e-24, maxIterations=1000)
+    rootNode.addObject('BlockGaussSeidelConstraintSolver', tolerance=1e-24, maxIterations=1000)
     rootNode.addObject('OglSceneFrame', style='Arrows', alignment='TopRight')
 
     # --- Cylinder ---
@@ -134,8 +150,6 @@ def createScene(rootNode):
         src="@topo",
         indices='@boxToPull.indices'
     )
-
-    cylinder.addObject('GenericConstraintSolver')
 
     # Controller
     cylinder.addObject(
